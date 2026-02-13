@@ -95,9 +95,9 @@ public class MenuPrincipal extends GuiBase {
         btnSalir.setBackground(Color.RED);
         btnSalir.setForeground(Color.WHITE);
         panelPrincipal.add(btnSalir);
-
+ 
         btnAgregarPalabra.addActionListener(e -> {
-            //new PalabrasSecretasGUI().setVisible(true);
+            new PalabrasSecretasGui().setVisible(true);
             dispose();
         });
 
