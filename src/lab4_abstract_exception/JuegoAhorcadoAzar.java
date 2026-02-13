@@ -9,9 +9,9 @@ package lab4_abstract_exception;
  * @author USER
  */
 public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
-    public AdminPalabrasSecretas PalabraSecreta;
+    public AdminPalabraSecreta PalabraSecreta;
 
-    public JuegoAhorcadoAzar(AdminPalabrasSecretas PalabraSecreta)throws PalabraNoValidaException {
+    public JuegoAhorcadoAzar(AdminPalabraSecreta PalabraSecreta)throws PalabraNoValidaException {
         this.PalabraSecreta = PalabraSecreta;
         inicializarPalabraSecreta();
     }
