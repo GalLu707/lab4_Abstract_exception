@@ -8,6 +8,6 @@ package lab4_abstract_exception;
  *
  * @author USER
  */
-public class JuegoAhorcadoFijo {
+public class JuegoAhorcadoFijo extends Juego {
     
 }
