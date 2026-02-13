@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author USER
  */
-public class JuegoAhorcadoBase implements JuegoAhorcado {
+public abstract class JuegoAhorcadoBase implements JuegoAhorcado {
     protected String palabraSecreta;
     protected char[] palabraActual;
     protected int intentos;

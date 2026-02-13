@@ -11,6 +11,7 @@ package lab4_abstract_exception;
 //clarissa
 
 public interface JuegoAhorcado {
-    void inicializarPlabraSecreta()throws PalabraNoValidaException;
-    void jugar(String palabra)throws PalabraNoValidaException; 
+    void inicializarPalabraSecreta() throws PalabraNoValidaException;
+    void jugar(String palabra) throws PalabraNoValidaException; 
 }
+

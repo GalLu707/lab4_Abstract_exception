@@ -9,47 +9,55 @@ package lab4_abstract_exception;
  * @author USER
  */
 public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
-    public AdminPalabraSecreta PalabraSecreta;
-
-    public JuegoAhorcadoAzar(AdminPalabraSecreta PalabraSecreta)throws PalabraNoValidaException {
-        this.PalabraSecreta = PalabraSecreta;
-        inicializarPalabraSecreta();
-    }
     
-    public void ActualizarPalabraActual(char letra){
-     char letraMayus=Character.toUpperCase(letra);
+    public AdminPalabraSecreta PalabraSecrata;
+
+    public JuegoAhorcadoAzar(AdminPalabraSecreta PalabraSecrata) throws PalabraNoValidaException {
+        super();
+        this.PalabraSecrata = PalabraSecrata;
+        inicializarPalabraSecreta();
+    } 
+
+    public void actualizarPalabraActual(char letra) {
+        char letraMayus = Character.toUpperCase(letra);
         for (int i = 0; i < palabraSecreta.length(); i++) {
-            if (palabraSecreta.charAt(i)==letra) {
-                palabraActual[i]=letra;
+            if (palabraSecreta.charAt(i) == letra) {
+                palabraActual[i] = letra;
             }
         }
     }
-    
-    public boolean verificarLetra(char letra){
-        return palabraSecreta.indexOf(letra)>=0;
+
+    @Override
+    public boolean verificarLetra(char letra) {
+        return palabraSecreta.indexOf(letra) >= 0;
     }
-    
-    public boolean hasGanado(){
+
+    @Override
+    public boolean hasGanado() {
         for (char c : palabraActual) {
-            if (c=='_') {
+            if (c == '_') {
                 return false;
             }
         }
         return true;
     }
-    
-    public void inicializarPalabraSecreta()throws PalabraNoValidaException{
-        this.palabraSecreta=PalabraSecreta.ObtenerPalabraAlAzar();
-        palabraActual=new char[palabraSecreta.length()];
-        for (int i = 0; i < palabraSecreta.length();i++) {
-            palabraActual[i]='_';
+
+    @Override
+    public void inicializarPalabraSecreta() throws PalabraNoValidaException {
+        this.palabraSecreta = PalabraSecrata.ObtenerPalabraAlAzar();
+
+        palabraActual = new char[palabraSecreta.length()];
+        for (int i = 0; i < palabraSecreta.length(); i++) {
+            palabraActual[i] = '_';
         }
         letraUsadas.clear();
-        intentos=limiteIntentos;
+        intentos = limiteIntentos;
     }
+
     
-    public void jugar(String palabra)throws PalabraNoValidaException{
-        this.PalabraSecreta=PalabraSecreta;
+    @Override
+    public void jugar(String palabra) throws PalabraNoValidaException {
+        this.PalabraSecrata = PalabraSecrata;
         inicializarPalabraSecreta();
     }
 }

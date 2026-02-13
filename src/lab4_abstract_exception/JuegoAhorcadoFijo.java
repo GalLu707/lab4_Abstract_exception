@@ -10,24 +10,27 @@ package lab4_abstract_exception;
  */
 public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
 
-    public JuegoAhorcadoFijo(String palabra)throws PalabraNoValidaException {
+    public JuegoAhorcadoFijo(String palabra) throws PalabraNoValidaException {
         super();
         jugar(palabra);
     }
-    
-    protected void actualizarPalabraActual(char letra){
+
+    @Override
+    protected void actualizarPalabraActual(char letra) {
         for (int i = 0; i < palabraSecreta.length(); i++) {
-            if(palabraSecreta.charAt(i)==letra){
-                palabraActual[i]= letra;
+            if (palabraSecreta.charAt(i) == letra) {
+                palabraActual[i] = letra;
             }
         }
     }
-    
-    protected boolean verificarLetra(char letra){
-        return palabraSecreta.indexOf(letra)>=0;
+
+    @Override
+    protected boolean verificarLetra(char letra) {
+        return palabraSecreta.indexOf(letra) >= 0;
     }
-    
-    protected boolean hasGanado(){
+
+    @Override
+    protected boolean hasGanado() {
         for (char letra : palabraActual) {
             if (letra == '_') {
                 return false;
@@ -35,12 +38,13 @@ public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
         }
         return true;
     }
-    
-    public void inicializarPalabraSecreta()throws PalabraNoValidaException{
-        if (palabraSecreta==null||palabraSecreta.isEmpty()) {
+
+    @Override
+    public void inicializarPalabraSecreta() throws PalabraNoValidaException {
+        if (palabraSecreta == null || palabraSecreta.isEmpty()) {
             throw new PalabraNoValidaException("La palabra secreta no puede estar vacía.");
         }
-        palabraActual=new char[palabraSecreta.length()];
+        palabraActual = new char[palabraSecreta.length()];
         for (int i = 0; i < palabraSecreta.length(); i++) {
             if (Character.isLetter(palabraSecreta.charAt(i))) {
                 palabraActual[i] = '_';
@@ -49,9 +53,10 @@ public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
             }
         }
     }
-    
-    public void jugar(String palabra) throws PalabraNoValidaException{
-        this.palabraSecreta=palabra;
+
+    @Override
+    public void jugar(String palabra) throws PalabraNoValidaException {
+        this.palabraSecreta = palabra;
         inicializarPalabraSecreta();
     }
 }
