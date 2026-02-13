@@ -38,5 +38,18 @@ public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
         return true;
     }
     
+    public void inicializarPalabraSecreta()throws PalabraNoValidaException{
+        this.palabraSecreta=PalabraSecreta.ObtenerPalabraAzar();
+        palabraActual=new char[palabrasSecreta.length()];
+        for (int i = 0; i < palabraSecreta.length();i++) {
+            palabraActual[i]='_';
+        }
+        letraUsadas.clear();
+        intentos=limiteIntentos;
+    }
     
+    public void jugar(String palabra)throws PalabraNoValidaException{
+        this.PalabraSecreta=PalabraSecreta;
+        inicializarPalabraSecreta();
+    }
 }
