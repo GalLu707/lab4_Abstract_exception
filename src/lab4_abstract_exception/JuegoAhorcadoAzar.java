@@ -8,6 +8,14 @@ package lab4_abstract_exception;
  *
  * @author USER
  */
-public class JuegoAhorcadoAzar {
+public class JuegoAhorcadoAzar extends JuegoAhorcadoBase{
+    public AdminPalabrasSecretas PalabraSecreta;
+
+    public JuegoAhorcadoAzar(AdminPalabrasSecretas PalabraSecreta)throws PalabraNoValidaException {
+        this.PalabraSecreta = PalabraSecreta;
+        inicializarPalabraSecreta();
+    }
+    
+    
     
 }
