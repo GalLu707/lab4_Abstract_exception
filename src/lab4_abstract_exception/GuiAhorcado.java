@@ -30,7 +30,6 @@ public class GuiAhorcado extends GuiBase {
     private JuegoAhorcadoBase juego;
     private final String palabraFija;
 
-    // 🎨 COLORES TEMA
     private final Color COLOR_SHREK = new Color(110, 190, 70);
     private final Color COLOR_MIKU = new Color(57, 197, 187);
     private final Color COLOR_FONDO = new Color(230, 255, 250);
@@ -58,7 +57,7 @@ public class GuiAhorcado extends GuiBase {
     private void iniciarJuego() {
         try {
             if (modo != null && modo.toUpperCase().contains("AZAR")) {
-                //juego = new JuegoAhorcadoAzar(AdminPalabrasSecretas.getInstance());
+                juego = new JuegoAhorcadoAzar(AdminPalabraSecreta.getInstance());
             } else {
                 String p = (palabraFija == null) ? "" : palabraFija.toUpperCase();
                 juego = new JuegoAhorcadoFijo(p);
@@ -73,133 +72,92 @@ public class GuiAhorcado extends GuiBase {
     }
 
     public void initComponents() {
+        panelPrincipal = createPanelPrincipal();
+        panelPrincipal.setLayout(null);
+        panelPrincipal.setBackground(COLOR_FONDO);
+        setContentPane(panelPrincipal);
 
-    panelPrincipal = createPanelPrincipal();
-    panelPrincipal.setLayout(null);
-    panelPrincipal.setBackground(new Color(230, 255, 250));
-    setContentPane(panelPrincipal);
+        lblTitulo = createLabelTitle(
+                modo == null ? "AHORCADO" : modo,
+                200, 20, 400, 50);
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitulo.setForeground(COLOR_SHREK);
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 34));
+        panelPrincipal.add(lblTitulo);
 
-    // 🎨 COLORES
-    Color COLOR_SHREK = new Color(110, 190, 70);
-    Color COLOR_MIKU = new Color(57, 197, 187);
+        lblIntentos = createLabel("Intentos restantes: ", 40, 100, 300, 40);
+        lblIntentos.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lblIntentos.setForeground(COLOR_SHREK);
+        panelPrincipal.add(lblIntentos);
 
-    // 🏆 TÍTULO SUPERIOR
-    lblTitulo = createLabelTitle(
-            modo == null ? "AHORCADO ARENA" : modo,
-            200, 10, 370, 50);
-    lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-    lblTitulo.setFont(new Font("Arial", Font.BOLD, 32));
-    lblTitulo.setForeground(COLOR_SHREK);
-    panelPrincipal.add(lblTitulo);
+        lblPalabraActual = createLabel("_ _ _ _ _ _ _", 300, 150, 400, 50);
+        lblPalabraActual.setFont(new Font("SansSerif", Font.BOLD, 28));
+        lblPalabraActual.setForeground(COLOR_MIKU);
+        panelPrincipal.add(lblPalabraActual);
 
-    // 🟢 PANEL IZQUIERDO - FIGURA
-    JPanel panelFigura = new JPanel();
-    panelFigura.setLayout(null);
-    panelFigura.setBounds(30, 120, 250, 330);
-    panelFigura.setBackground(new Color(220, 245, 220));
-    panelFigura.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(COLOR_SHREK, 3),
-            "Zona Shrek",
-            0, 0,
-            new Font("Arial", Font.BOLD, 14),
-            COLOR_SHREK));
-    panelPrincipal.add(panelFigura);
+        txtLetra = createTextField(380, 220, 50, 50);
+        txtLetra.setHorizontalAlignment(JTextField.CENTER);
+        txtLetra.setFont(new Font("Arial", Font.BOLD, 22));
+        panelPrincipal.add(txtLetra);
 
-    taFigura = new JTextArea();
-    taFigura.setBounds(25, 40, 200, 260);
-    taFigura.setEditable(false);
-    taFigura.setFont(new Font("Monospaced", Font.BOLD, 13));
-    taFigura.setBackground(Color.WHITE);
-    panelFigura.add(taFigura);
+        btnAdivinar = createBtn("Adivinar letra");
+        btnAdivinar.setBounds(350, 290, 160, 45);
+        estilizarBoton(btnAdivinar, COLOR_SHREK);
+        panelPrincipal.add(btnAdivinar);
 
-    // 🟦 PANEL DERECHO - LETRAS REPETIDAS
-    JPanel panelRepetidas = new JPanel();
-    panelRepetidas.setLayout(null);
-    panelRepetidas.setBounds(490, 120, 250, 330);
-    panelRepetidas.setBackground(new Color(220, 250, 255));
-    panelRepetidas.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(COLOR_MIKU, 3),
-            "Zona Miku",
-            0, 0,
-            new Font("Arial", Font.BOLD, 14),
-            COLOR_MIKU));
-    panelPrincipal.add(panelRepetidas);
+        taFigura = new JTextArea();
+        taFigura.setBounds(70, 150, 200, 250);
+        taFigura.setEditable(false);
+        taFigura.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        taFigura.setBackground(Color.WHITE);
+        taFigura.setBorder(BorderFactory.createLineBorder(COLOR_SHREK, 2));
+        panelPrincipal.add(taFigura);
 
-    spRepetidas = createTable(
-            new String[]{"Letras usadas"},
-            new Object[][]{}, 28);
+        spRepetidas = createTable(new String[]{"Letras repetidas"},
+                new Object[][]{}, 28);
+        spRepetidas.setBounds(540, 220, 180, 200);
+        JTable t = (JTable) spRepetidas.getViewport().getView();
+        modeloRepetidas = new DefaultTableModel(
+                new Object[]{"Letras repetidas"}, 0);
+        t.setModel(modeloRepetidas);
+        t.setBackground(Color.WHITE);
+        t.setFont(new Font("SansSerif", Font.BOLD, 14));
+        panelPrincipal.add(spRepetidas);
 
-    spRepetidas.setBounds(25, 40, 200, 260);
-    JTable t = (JTable) spRepetidas.getViewport().getView();
-    modeloRepetidas = new DefaultTableModel(
-            new Object[]{"Letras usadas"}, 0);
-    t.setModel(modeloRepetidas);
-    t.setFont(new Font("SansSerif", Font.BOLD, 14));
-    panelRepetidas.add(spRepetidas);
+        btnNuevoJuego = createBtn("Nuevo Juego");
+        btnNuevoJuego.setBounds(260, 470, 150, 45);
+        estilizarBoton(btnNuevoJuego, COLOR_MIKU);
+        panelPrincipal.add(btnNuevoJuego);
 
-    // 🎯 CENTRO - PALABRA
-    lblPalabraActual = createLabel("_ _ _ _ _ _ _", 300, 150, 260, 60);
-    lblPalabraActual.setHorizontalAlignment(SwingConstants.CENTER);
-    lblPalabraActual.setFont(new Font("Arial", Font.BOLD, 34));
-    lblPalabraActual.setForeground(COLOR_MIKU);
-    panelPrincipal.add(lblPalabraActual);
+        btnSalir = createBtn("Salir");
+        btnSalir.setBounds(450, 470, 150, 45);
+        btnSalir.setBackground(Color.RED);
+        btnSalir.setForeground(Color.WHITE);
+        panelPrincipal.add(btnSalir);
 
-    // Intentos
-    lblIntentos = createLabel("Intentos restantes: ", 300, 90, 300, 30);
-    lblIntentos.setFont(new Font("SansSerif", Font.BOLD, 16));
-    lblIntentos.setForeground(COLOR_SHREK);
-    panelPrincipal.add(lblIntentos);
+        btnSalir.addActionListener(e -> {
+            new MenuPrincipal().setVisible(true);
+            dispose();
+        });
 
-    // ✏️ INPUT LETRA
-    txtLetra = createTextField(380, 240, 60, 60);
-    txtLetra.setHorizontalAlignment(JTextField.CENTER);
-    txtLetra.setFont(new Font("Arial", Font.BOLD, 28));
-    txtLetra.setBorder(BorderFactory.createLineBorder(COLOR_MIKU, 3));
-    panelPrincipal.add(txtLetra);
-
-    // 🎯 BOTÓN ADIVINAR
-    btnAdivinar = createBtn("Confirmar Letra");
-    btnAdivinar.setBounds(310, 310, 180, 45);
-    estilizarBoton(btnAdivinar, COLOR_SHREK);
-    panelPrincipal.add(btnAdivinar);
-
-    // 🔄 NUEVO JUEGO
-    btnNuevoJuego = createBtn("Reiniciar Arena");
-    btnNuevoJuego.setBounds(200, 460, 180, 45);
-    estilizarBoton(btnNuevoJuego, COLOR_MIKU);
-    panelPrincipal.add(btnNuevoJuego);
-
-    // 🚪 SALIR
-    btnSalir = createBtn("Salir");
-    btnSalir.setBounds(420, 460, 150, 45);
-    btnSalir.setBackground(Color.RED);
-    btnSalir.setForeground(Color.WHITE);
-    panelPrincipal.add(btnSalir);
-
-    // LISTENERS (NO TOCAMOS LÓGICA)
-    btnSalir.addActionListener(e -> {
-        new MenuPrincipal().setVisible(true);
-        dispose();
-    });
-
-    btnNuevoJuego.addActionListener(e -> {
-        if (modo != null && modo.toUpperCase().contains("AZAR")) {
-            new GuiAhorcado(modo).setVisible(true);
-        } else {
-            String nueva = JOptionPane.showInputDialog(this,
-                    "Ingrese la nueva palabra:");
-            if (nueva != null && !nueva.equals("")) {
-                new GuiAhorcado(modo, nueva).setVisible(true);
+        btnNuevoJuego.addActionListener(e -> {
+            if (modo != null && modo.toUpperCase().contains("AZAR")) {
+                new GuiAhorcado(modo).setVisible(true);
             } else {
-                return;
+                String nueva = JOptionPane.showInputDialog(this,
+                        "Ingrese la nueva palabra para modo FIJO:");
+                if (nueva != null && !nueva.equals("")) {
+                    new GuiAhorcado(modo, nueva).setVisible(true);
+                } else {
+                    return;
+                }
             }
-        }
-        dispose();
-    });
+            dispose();
+        });
 
-    btnAdivinar.addActionListener(e -> adivinar());
-    txtLetra.addActionListener(e -> adivinar());
-}
+        btnAdivinar.addActionListener(e -> adivinar());
+        txtLetra.addActionListener(e -> adivinar());
+    }
 
     private void estilizarBoton(JButton btn, Color colorFondo) {
         btn.setBackground(colorFondo);
@@ -209,7 +167,6 @@ public class GuiAhorcado extends GuiBase {
         btn.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     }
 
-    // 🔹 TODA TU LÓGICA ORIGINAL INTACTA
     private void adivinar() {
         if (juego == null) return;
 
@@ -249,14 +206,14 @@ public class GuiAhorcado extends GuiBase {
 
         if (juego.hasGanado()) {
             JOptionPane.showMessageDialog(this,
-                    "¡VICTORIA SHREK x MIKU! 🏆\nLa palabra era: "
+                    "¡VICTORIA! \nLa palabra era: "
                             + juego.palabraSecreta,
                     "Ahorcado",
                     JOptionPane.INFORMATION_MESSAGE);
             btnAdivinar.setEnabled(false);
         } else if (juego.intentos == 0) {
             JOptionPane.showMessageDialog(this,
-                    "DERROTA 💀\nLa palabra era: "
+                    "DERROTA\nLa palabra era: "
                             + juego.palabraSecreta,
                     "Ahorcado",
                     JOptionPane.ERROR_MESSAGE);
