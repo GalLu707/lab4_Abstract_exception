@@ -97,7 +97,7 @@ public class MenuPrincipal extends GuiBase {
         panelPrincipal.add(btnSalir);
 
         btnAgregarPalabra.addActionListener(e -> {
-            //new PalabrasSecretasGUI().setVisible(true);
+            new PalabrasSecretasGui().setVisible(true);
             dispose();
         });
 
