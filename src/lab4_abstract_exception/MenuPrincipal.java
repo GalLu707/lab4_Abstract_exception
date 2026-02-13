@@ -131,8 +131,4 @@ public class MenuPrincipal extends GuiBase {
         btn.setFocusPainted(false);
         btn.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     }
-
-    public static void main(String[] args) {
-        new MenuPrincipal().setVisible(true);
-    }
 }

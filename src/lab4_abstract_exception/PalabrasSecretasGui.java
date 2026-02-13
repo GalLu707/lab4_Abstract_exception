@@ -87,9 +87,4 @@ public class PalabrasSecretasGui extends GuiBase {
         setContentPane(panelPrincipal);
 
     }
-
-    public static void main(String[] args) {
-        new PalabrasSecretasGui().setVisible(true);
-    }
-
 }
