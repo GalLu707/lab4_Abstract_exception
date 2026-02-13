@@ -11,8 +11,6 @@ import java.util.Random;
  *
  * @author USER
  */
-//clarissa
-
 public final class AdminPalabraSecreta {
     private static final AdminPalabraSecreta INSTANCE = new AdminPalabraSecreta();
     public final ArrayList<String> palabraSecreta;

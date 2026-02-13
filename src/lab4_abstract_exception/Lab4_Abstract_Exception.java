@@ -8,7 +8,7 @@ package lab4_abstract_exception;
 public class Lab4_Abstract_Exception {
 
     public static void main(String[] args) {
-        
+        new MenuPrincipal().setVisible(true);
     }
     
 }

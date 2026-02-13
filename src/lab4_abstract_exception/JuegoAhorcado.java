@@ -8,7 +8,6 @@ package lab4_abstract_exception;
  *
  * @author USER
  */
-//clarissa
 
 public interface JuegoAhorcado {
     void inicializarPlabraSecreta()throws PalabraNoValidaException;
