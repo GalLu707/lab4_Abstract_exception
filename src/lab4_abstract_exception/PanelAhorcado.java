@@ -7,9 +7,10 @@ package lab4_abstract_exception;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+
 /**
  *
- * @author Nathan 
+ * @author Nathan
  */
 
 public class PanelAhorcado extends JPanel {
@@ -21,10 +22,10 @@ public class PanelAhorcado extends JPanel {
     private static final String RUTA = "/lab4_abstract_exception/Imagenes/";
 
     public PanelAhorcado() {
-        cabeza    = cargar(RUTA + "cabezap.png");
-        cuerpo    = cargar(RUTA + "cuerpo.png");
-        brazoIzq  = cargar(RUTA + "brazo izq.png");
-        brazoDer  = cargar(RUTA + "brazodere.png");
+        cabeza = cargar(RUTA + "cabezap.png");
+        cuerpo = cargar(RUTA + "cuerpo.png");
+        brazoIzq = cargar(RUTA + "brazo izq.png");
+        brazoDer = cargar(RUTA + "brazodere.png");
         piernaIzq = cargar(RUTA + "patitaizq.png");
         piernaDer = cargar(RUTA + "patitadere.png");
     }
@@ -47,18 +48,50 @@ public class PanelAhorcado extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.drawLine(50, 20, 220, 20);
-        g.drawLine(130, 20, 130, 320);
-        g.drawLine(50, 320, 220, 320);
+        // Horca
+        g.drawLine(50, 20, 240, 20);
+        g.drawLine(145, 20, 145, 360);
+        g.drawLine(50, 360, 240, 360);
 
-        int x = getWidth() / 2 - 30;
-        int y = 60;
+        // Centro del personaje
+        int centerX = 145;
+        int startY = 70;
 
-        if (errores >= 1 && cabeza != null)    g.drawImage(cabeza, x, y, 60, 60, this);
-        if (errores >= 2 && cuerpo != null)    g.drawImage(cuerpo, x, y + 60, 60, 80, this);
-        if (errores >= 3 && brazoIzq != null)  g.drawImage(brazoIzq, x - 40, y + 60, 60, 60, this);
-        if (errores >= 4 && brazoDer != null)  g.drawImage(brazoDer, x + 40, y + 60, 60, 60, this);
-        if (errores >= 5 && piernaIzq != null) g.drawImage(piernaIzq, x, y + 130, 60, 60, this);
-        if (errores >= 6 && piernaDer != null) g.drawImage(piernaDer, x + 20, y + 130, 60, 60, this);
+        int cabezaW = 90, cabezaH = 90;
+        int cuerpoW = 110, cuerpoH = 140;
+        int brazoW = 90, brazoH = 90;
+        int piernaW = 90, piernaH = 90;
+
+        // Cabeza
+        if (errores >= 1 && cabeza != null) {
+            g.drawImage(cabeza, centerX - cabezaW / 2, startY, cabezaW, cabezaH, this);
+        }
+
+        // Cuerpo
+        if (errores >= 2 && cuerpo != null) {
+            g.drawImage(cuerpo, centerX - cuerpoW / 2, startY + 70, cuerpoW, cuerpoH, this);
+        }
+
+        // Brazo izquierdo
+        if (errores >= 3 && brazoIzq != null) {
+            g.drawImage(brazoIzq, centerX - 95, startY + 80, brazoW, brazoH, this);
+        }
+
+        // Brazo derecho
+        if (errores >= 4 && brazoDer != null) {
+            g.drawImage(brazoDer, centerX + 5, startY + 80, brazoW, brazoH, this);
+        }
+
+        // Pierna izquierda
+        if (errores >= 5 && piernaIzq != null) {
+            g.drawImage(piernaIzq, centerX - 45, startY + 180, piernaW, piernaH, this);
+        }
+
+        // Pierna derecha
+        if (errores >= 6 && piernaDer != null) {
+            g.drawImage(piernaDer, centerX + 5, startY + 180, piernaW, piernaH, this);
+        }
     }
+
 }
+ 
