@@ -8,7 +8,6 @@ package lab4_abstract_exception;
  *
  * @author jerem
  */
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -23,7 +22,7 @@ public class MenuPrincipal extends GuiBase {
 
     private final Color COLOR_SHREK = new Color(110, 190, 70);
     private final Color COLOR_MIKU = new Color(57, 197, 187);
-    private final Color COLOR_FONDO = new Color(230, 255, 250); 
+    private final Color COLOR_FONDO = new Color(230, 255, 250);
 
     public MenuPrincipal() {
         super("Menu Principal Ahorcado", 615, 500);
@@ -33,20 +32,20 @@ public class MenuPrincipal extends GuiBase {
     public void initComponents() {
         panelPrincipal = createPanelPrincipal();
         panelPrincipal.setLayout(null);
-        panelPrincipal.setBackground(COLOR_FONDO); 
+        panelPrincipal.setBackground(COLOR_FONDO);
 
-        lblTitulo = new JLabel("D:< AHORCADO SHRIKU >:D"); 
+        lblTitulo = new JLabel("D:< AHORCADO SHRIKU >:D");
         lblTitulo.setBounds(0, 20, 615, 60);
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitulo.setForeground(COLOR_SHREK);
 
-        lblTitulo.setFont(new Font("Impact", Font.PLAIN, 48)); 
+        lblTitulo.setFont(new Font("Impact", Font.PLAIN, 48));
 
         lblTitulo.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(COLOR_MIKU, 2, true),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)
+                BorderFactory.createLineBorder(COLOR_MIKU, 2, true),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)
         ));
-            panelPrincipal.add(lblTitulo);
+        panelPrincipal.add(lblTitulo);
 
         ImageIcon iconShrekOriginal = new ImageIcon(
                 getClass().getResource("/img/shrek.png")
@@ -60,7 +59,6 @@ public class MenuPrincipal extends GuiBase {
         lblShrek = new JLabel(iconShrek);
         lblShrek.setBounds(10, 150, 180, 250);
         panelPrincipal.add(lblShrek);
-
 
         ImageIcon iconMikuOriginal = new ImageIcon(
                 getClass().getResource("/img/miku.png")
@@ -76,7 +74,7 @@ public class MenuPrincipal extends GuiBase {
         panelPrincipal.add(lblMiku);
 
         btnAgregarPalabra = createBtn("Agregar Palabras");
-        estilarBoton(btnAgregarPalabra, COLOR_MIKU); 
+        estilarBoton(btnAgregarPalabra, COLOR_MIKU);
         btnAgregarPalabra.setBounds(200, 130, 220, 50);
         panelPrincipal.add(btnAgregarPalabra);
 
@@ -95,7 +93,7 @@ public class MenuPrincipal extends GuiBase {
         btnSalir.setBackground(Color.RED);
         btnSalir.setForeground(Color.WHITE);
         panelPrincipal.add(btnSalir);
- 
+
         btnAgregarPalabra.addActionListener(e -> {
             new PalabrasSecretasGui().setVisible(true);
             dispose();
@@ -108,10 +106,17 @@ public class MenuPrincipal extends GuiBase {
 
         btnJugarFijo.addActionListener(e -> {
             String p = JOptionPane.showInputDialog(this, "Palabra fija:");
-            if (p != null && !p.trim().isEmpty()) {
-                new GuiAhorcado("AHORCADO FIJO", p.trim()).setVisible(true);
-                dispose();
+            if (p == null) {
+                return;
             }
+            p = p.trim();
+            if (p.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No puedes dejar la palabra vacía.");
+                return;
+            }
+
+            new GuiAhorcado("AHORCADO FIJO", p.toUpperCase()).setVisible(true);
+            dispose();
         });
 
         btnSalir.addActionListener(e -> dispose());

@@ -7,28 +7,26 @@ package lab4_abstract_exception;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-/**
- * GUI para el juego del Ahorcado.
- * Depende de:
- *  - BaseGUI (clase auxiliar para crear labels/buttons/panels)
- *  - JuegoAhorcadoBase, JuegoAhorcadoFijo, JuegoAhorcadoAzar
- *  - AdminPalabrasSecretas (Singleton)
- *  - MenuPrincipal (para volver al menú)
- */
 
+/**
+ * GUI para el juego del Ahorcado. Depende de: - BaseGUI (clase auxiliar para
+ * crear labels/buttons/panels) - JuegoAhorcadoBase, JuegoAhorcadoFijo,
+ * JuegoAhorcadoAzar - AdminPalabrasSecretas (Singleton) - MenuPrincipal (para
+ * volver al menú)
+ */
 public class GuiAhorcado extends GuiBase {
 
     private JPanel panelPrincipal;
     private JLabel lblTitulo, lblIntentos, lblPalabraActual;
     private JButton btnAdivinar, btnNuevoJuego, btnSalir;
     private JTextField txtLetra;
-    private JTextArea taFigura;
     private JScrollPane spRepetidas;
     private DefaultTableModel modeloRepetidas;
 
     private final String modo;
     private JuegoAhorcadoBase juego;
     private final String palabraFija;
+    private PanelAhorcado panelAhorcado;
 
     private final Color COLOR_SHREK = new Color(110, 190, 70);
     private final Color COLOR_MIKU = new Color(57, 197, 187);
@@ -67,7 +65,9 @@ public class GuiAhorcado extends GuiBase {
                     "Error al iniciar el juego: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
             juego = null;
-            if (btnAdivinar != null) btnAdivinar.setEnabled(false);
+            if (btnAdivinar != null) {
+                btnAdivinar.setEnabled(false);
+            }
         }
     }
 
@@ -105,13 +105,11 @@ public class GuiAhorcado extends GuiBase {
         estilizarBoton(btnAdivinar, COLOR_SHREK);
         panelPrincipal.add(btnAdivinar);
 
-        taFigura = new JTextArea();
-        taFigura.setBounds(70, 150, 200, 250);
-        taFigura.setEditable(false);
-        taFigura.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        taFigura.setBackground(Color.WHITE);
-        taFigura.setBorder(BorderFactory.createLineBorder(COLOR_SHREK, 2));
-        panelPrincipal.add(taFigura);
+        panelAhorcado = new PanelAhorcado();
+        panelAhorcado.setBounds(40, 130, 250, 320);
+        panelAhorcado.setBackground(Color.WHITE);
+        panelAhorcado.setBorder(BorderFactory.createLineBorder(COLOR_SHREK, 2));
+        panelPrincipal.add(panelAhorcado);
 
         spRepetidas = createTable(new String[]{"Letras repetidas"},
                 new Object[][]{}, 28);
@@ -168,7 +166,9 @@ public class GuiAhorcado extends GuiBase {
     }
 
     private void adivinar() {
-        if (juego == null) return;
+        if (juego == null) {
+            return;
+        }
 
         String s = txtLetra.getText();
         if (s == null || s.length() == 0) {
@@ -207,14 +207,14 @@ public class GuiAhorcado extends GuiBase {
         if (juego.hasGanado()) {
             JOptionPane.showMessageDialog(this,
                     "¡VICTORIA! \nLa palabra era: "
-                            + juego.palabraSecreta,
+                    + juego.palabraSecreta,
                     "Ahorcado",
                     JOptionPane.INFORMATION_MESSAGE);
             btnAdivinar.setEnabled(false);
         } else if (juego.intentos == 0) {
             JOptionPane.showMessageDialog(this,
                     "DERROTA\nLa palabra era: "
-                            + juego.palabraSecreta,
+                    + juego.palabraSecreta,
                     "Ahorcado",
                     JOptionPane.ERROR_MESSAGE);
             btnAdivinar.setEnabled(false);
@@ -232,20 +232,23 @@ public class GuiAhorcado extends GuiBase {
     }
 
     private void render() {
-        if (juego == null) return;
+        if (juego == null) {
+            return;
+        }
         lblIntentos.setText("Intentos restantes: "
                 + juego.intentos + "/" + juego.limiteIntentos);
         lblPalabraActual.setText(formatearPalabra(juego.palabraActual));
-        int etapa = juego.limiteIntentos - juego.intentos;
-        etapa = Math.max(0,
-                Math.min(etapa, juego.figuraAhorcado.size() - 1));
-        taFigura.setText(juego.figuraAhorcado.get(etapa));
+        int errores = juego.limiteIntentos - juego.intentos;
+        panelAhorcado.setErrores(errores);
+
     }
 
     private String formatearPalabra(char[] arr) {
         String res = "";
         for (int i = 0; i < arr.length; i++) {
-            if (!res.equals("")) res = res + ' ';
+            if (!res.equals("")) {
+                res = res + ' ';
+            }
             res = res + arr[i];
         }
         return res;
