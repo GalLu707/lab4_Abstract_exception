@@ -4,10 +4,15 @@
  */
 package lab4_abstract_exception;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author USER
  */
-public class AdminPalabraSecreta {
+//clarissa
+
+public final class AdminPalabraSecreta {
     
 }

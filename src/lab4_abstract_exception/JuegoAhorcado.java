@@ -8,6 +8,9 @@ package lab4_abstract_exception;
  *
  * @author USER
  */
-public class JuegoAhorcado {
-    
+//clarissa
+
+public interface JuegoAhorcado {
+    void inicializarPlabraSecreta()throws PalabraNoValidaException;
+    void jugar(String palabra)throws PalabraNoValidaException; 
 }
