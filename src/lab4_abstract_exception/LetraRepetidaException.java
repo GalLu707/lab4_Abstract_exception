@@ -8,6 +8,10 @@ package lab4_abstract_exception;
  *
  * @author jerem
  */
-public class LetraRepetidaException {
-    
+public class LetraRepetidaException extends Exception{
+    public LetraRepetidaException(String mensaje){
+        super(mensaje);
+    }
 }
+    
+
