@@ -16,17 +16,10 @@ public abstract class JuegoAhorcadoBase implements JuegoAhorcado {
     protected int intentos;
     protected final int limiteIntentos=6;
     protected ArrayList<Character> letraUsadas;
-    protected ArrayList<String> figuraAhorcado;
     
     protected JuegoAhorcadoBase(){
         letraUsadas=new ArrayList<>();
-        figuraAhorcado=new ArrayList<>();
-        crearFigura();
         intentos=limiteIntentos;
-    }
-    
-    protected void crearFigura(){
-        
     }
     
     
