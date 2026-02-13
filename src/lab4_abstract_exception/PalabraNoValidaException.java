@@ -1,0 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package lab4_abstract_exception;
+
+/**
+ *
+ * @author jerem
+ */
+public class PalabraNoValidaException extends Exception{
+    public PalabraNoValidaException(String mensaje){
+        super(mensaje);
+    }
+}
